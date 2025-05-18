@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Canvas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Digital Canvas</h1>
+            <p>Express yourself through art!</p>
+        </div>
+        
+        <div class="tools">
+            <div class="tool-section">
+                <h3>Brush Size</h3>
+                <input type="range" id="brush-size" min="1" max="50" value="10">
+            </div>
+            
+            <div class="tool-section">
+                <h3>Color</h3>
+                <div class="color-palette">
+                    <button class="color-btn active" data-color="#000000" style="background-color: #000000;"></button>
+                    <button class="color-btn" data-color="#ff0000" style="background-color: #ff0000;"></button>
+                    <button class="color-btn" data-color="#0000ff" style="background-color: #0000ff;"></button>
+                    <button class="color-btn" data-color="#00ff00" style="background-color: #00ff00;"></button>
+                    <button class="color-btn" data-color="#ffff00" style="background-color: #ffff00;"></button>
+                    <button class="color-btn" data-color="#ff00ff" style="background-color: #ff00ff;"></button>
+                    <input type="color" id="custom-color" value="#000000">
+                </div>
+            </div>
+            
+            <div class="tool-section">
+                <h3>Actions</h3>
+                <div class="action-buttons">
+                    <button id="clear-btn">Clear Canvas</button>
+                    <button id="save-btn">Save Artwork</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="drawing-canvas"></canvas>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon='{"version":"2024.11.0","token":"4c6229722a6346bc8eb5cb0e5eae5d41","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+
