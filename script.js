@@ -1,4 +1,119 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    // Fetch creator info
+    try {
+        const creator = await window.websim.getCreator();
+        
+        // Update profile with creator info
+        if (creator) {
+            document.getElementById('creator-name').textContent = '@' + creator.username;
+            
+            // Set avatar if available
+            if (creator.avatar_url) {
+                document.getElementById('creator-avatar').src = creator.avatar_url;
+            }
+            
+            // Set description if available
+            if (creator.description) {
+                document.getElementById('creator-description').textContent = creator.description;
+            } else {
+                document.getElementById('creator-description').textContent = 'Digital artist and creator of Canvas drawing application';
+            }
+            
+            // Fetch user stats
+            try {
+                const statsResponse = await fetch(`/api/v1/users/${creator.username}/stats`);
+                const statsData = await statsResponse.json();
+                
+                if (statsData && statsData.stats) {
+                    document.getElementById('total-likes').textContent = statsData.stats.total_likes.toLocaleString();
+                    document.getElementById('total-views').textContent = statsData.stats.total_views.toLocaleString();
+                }
+            } catch (error) {
+                console.error('Error fetching user stats:', error);
+            }
+            
+            // Fetch user followers count
+            try {
+                const followersResponse = await fetch(`/api/v1/users/${creator.username}/followers?count=true`);
+                const followersData = await followersResponse.json();
+                
+                if (followersData && followersData.followers && followersData.followers.meta && followersData.followers.meta.count !== null) {
+                    document.getElementById('total-followers').textContent = followersData.followers.meta.count.toLocaleString();
+                }
+            } catch (error) {
+                console.error('Error fetching followers:', error);
+            }
+            
+            // Fetch projects
+            try {
+                const projectsResponse = await fetch(`/api/v1/users/${creator.username}/projects?posted=true`);
+                const projectsData = await projectsResponse.json();
+                
+                if (projectsData && projectsData.projects && projectsData.projects.data) {
+                    renderProjects(projectsData.projects.data);
+                }
+            } catch (error) {
+                console.error('Error fetching projects:', error);
+                document.getElementById('projects-container').innerHTML = 
+                    '<div class="error-message">Unable to load projects at this time.</div>';
+            }
+        }
+    } catch (error) {
+        console.error('Error fetching creator info:', error);
+        document.getElementById('creator-name').textContent = 'Digital Canvas Creator';
+        document.getElementById('creator-description').textContent = 
+            'Creator of the Digital Canvas drawing application';
+    }
+    
+    // Function to render projects
+    function renderProjects(projects) {
+        const projectsContainer = document.getElementById('projects-container');
+        
+        if (projects.length === 0) {
+            projectsContainer.innerHTML = '<div class="no-projects">No projects to display yet.</div>';
+            return;
+        }
+        
+        projectsContainer.innerHTML = '';
+        
+        projects.forEach(projectData => {
+            const project = projectData.project;
+            const site = projectData.site;
+            
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card';
+            
+            // Project image
+            const imageUrl = site ? 
+                `https://images.websim.com/v1/site/${site.id}/600` : 
+                'brush-icon.png';
+            
+            projectCard.innerHTML = `
+                <div class="project-image">
+                    <img src="${imageUrl}" alt="${project.title || 'Project'}">
+                </div>
+                <div class="project-info">
+                    <h3>${project.title || 'Untitled Project'}</h3>
+                    <p>${project.description || 'No description'}</p>
+                    <div class="project-stats">
+                        <span><i class="stat-icon">👁️</i> ${project.stats.views}</span>
+                        <span><i class="stat-icon">❤️</i> ${project.stats.likes}</span>
+                    </div>
+                </div>
+            `;
+            
+            // Add link to project
+            if (site) {
+                projectCard.addEventListener('click', () => {
+                    window.location.href = `https://websim.com/c/${site.id}`;
+                });
+                projectCard.style.cursor = 'pointer';
+            }
+            
+            projectsContainer.appendChild(projectCard);
+        });
+    }
+
     const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
     const colorBtns = document.querySelectorAll('.color-btn');
@@ -139,4 +254,3 @@ document.addEventListener('DOMContentLoaded', function() {
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
-

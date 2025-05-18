@@ -3,46 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Canvas</title>
+    <title>Creator Profile</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Digital Canvas</h1>
-            <p>Express yourself through art!</p>
-        </div>
-        
-        <div class="tools">
-            <div class="tool-section">
-                <h3>Brush Size</h3>
-                <input type="range" id="brush-size" min="1" max="50" value="10">
-            </div>
-            
-            <div class="tool-section">
-                <h3>Color</h3>
-                <div class="color-palette">
-                    <button class="color-btn active" data-color="#000000" style="background-color: #000000;"></button>
-                    <button class="color-btn" data-color="#ff0000" style="background-color: #ff0000;"></button>
-                    <button class="color-btn" data-color="#0000ff" style="background-color: #0000ff;"></button>
-                    <button class="color-btn" data-color="#00ff00" style="background-color: #00ff00;"></button>
-                    <button class="color-btn" data-color="#ffff00" style="background-color: #ffff00;"></button>
-                    <button class="color-btn" data-color="#ff00ff" style="background-color: #ff00ff;"></button>
-                    <input type="color" id="custom-color" value="#000000">
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="avatar-container">
+                    <img id="creator-avatar" src="brush-icon.png" alt="Creator Avatar">
                 </div>
-            </div>
-            
-            <div class="tool-section">
-                <h3>Actions</h3>
-                <div class="action-buttons">
-                    <button id="clear-btn">Clear Canvas</button>
-                    <button id="save-btn">Save Artwork</button>
+                <div class="creator-details">
+                    <h1 id="creator-name">Loading...</h1>
+                    <p id="creator-description" class="bio">Loading...</p>
+                    <div class="creator-stats">
+                        <div class="stat">
+                            <span id="total-views">0</span>
+                            <span class="label">Views</span>
+                        </div>
+                        <div class="stat">
+                            <span id="total-likes">0</span>
+                            <span class="label">Likes</span>
+                        </div>
+                        <div class="stat">
+                            <span id="total-followers">0</span>
+                            <span class="label">Followers</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="canvas-container">
-            <canvas id="drawing-canvas"></canvas>
+        <div class="content-section">
+            <div class="section-header">
+                <h2>My Projects</h2>
+                <a id="drawing-app-link" href="canvas.html" class="action-btn">
+                    <img src="brush-icon.png" alt="Brush">
+                    Open Drawing App
+                </a>
+            </div>
+            
+            <div id="projects-container" class="projects-grid">
+                <div class="loading-projects">Loading projects...</div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>About Me</h2>
+            <div class="about-content">
+                <p>I am the creator of Digital Canvas, a web-based drawing application that allows users to express their creativity through digital art. I'm passionate about making creative tools accessible to everyone.</p>
+                <p>The Digital Canvas project features:</p>
+                <ul>
+                    <li>Intuitive drawing tools</li>
+                    <li>Customizable brush sizes</li>
+                    <li>Color palette selection</li>
+                    <li>Easy saving of artwork</li>
+                </ul>
+            </div>
         </div>
     </div>
     
